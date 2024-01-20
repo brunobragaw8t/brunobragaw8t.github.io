@@ -76,6 +76,24 @@
             writing-mode: vertical-rl;
             text-orientation: upright;
         }
+
+        footer {
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        footer p:last-child {
+            opacity: 0.5;
+        }
+
+        footer span {
+            color: #f00;
+        }
+
+        footer a {
+            color: inherit;
+        }
     </style>
 </head>
 <body>
@@ -86,6 +104,16 @@
         <div class="bars js-bars">
         </div><!-- .bars -->
     </div><!-- #main -->
+
+    <footer>
+        <p>
+            Made with <span title="passion">❤</span> by <a href="https://github.com/brunobragaw8t" target="_blank">Braga</a>
+        </p>
+
+        <p>
+            Yes, my resume is a single HTML file.
+        </p>
+    </footer>
 
     <script>
         function getDaysBetweenDates(date1, date2) {
@@ -177,7 +205,7 @@
                     end: null,
                 },
                 {
-                    icon: 'https://skillicons.dev/icons?i=vue',
+                    icon: 'https://skillicons.dev/icons?i=vue&theme=light',
                     title: 'Vue',
                     start: '2022-01-25',
                     end: null,
