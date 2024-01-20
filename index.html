@@ -16,10 +16,39 @@
         }
 
         #main {
+            display: flex;
             padding: 1rem;
+            overflow: hidden;
+            box-sizing: content-box;
+        }
+
+        .scale {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scale__item {
+            position: relative;
+        }
+
+        .scale__inner {
+            position: absolute;
+            font-size: 0.5rem;
+            transform: translateY(-50%);
+        }
+
+        .scale__inner::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 150%;
+            border-top: 1px dashed rgba(255, 255, 255, 0.10);
+            width: 100vw;
         }
 
         .bars {
+            flex-grow: 1;
             display: flex;
             align-items: flex-start;
             justify-content: center;
@@ -50,7 +79,7 @@
     </style>
 </head>
 <body>
-    <div id="main">
+    <div id="main" class="js-main">
         <div class="scale js-scale">
         </div><!-- .scale -->
 
@@ -68,18 +97,11 @@
         }
 
         function render() {
-            const target = document.querySelector('.js-bars');
+            const mainTarget = document.querySelector('.js-main');
+            const scaleTarget = document.querySelector('.js-scale');
+            const barsTarget = document.querySelector('.js-bars');
 
-        }
-
-        function renderScale() {
-
-        }
-
-        function renderBars() {
-            const target = document.querySelector('.js-bars');
-
-            if (!target) {
+            if (!scaleTarget || !barsTarget) {
                 return;
             }
 
@@ -192,7 +214,37 @@
                 return acc;
             }, today);
 
-            target.style.height = `${getDaysBetweenDates(startingDate, today)}px`;
+            mainTarget.style.height = `${getDaysBetweenDates(startingDate, today)}px`;
+
+            const startingDateElem = document.createElement('div');
+            startingDateElem.className = 'scale__item';
+            startingDateElem.innerHTML = `<span class="scale__inner">start</span>`;
+            scaleTarget.appendChild(startingDateElem);
+
+            const secondYear = startingDate.getFullYear() + 1;
+
+            for (let i = secondYear; i <= today.getFullYear(); i++) {
+                const dateElem = document.createElement('div');
+                dateElem.className = 'scale__item';
+                dateElem.innerHTML = `<span class="scale__inner">${i}</span>`;
+
+                const before = (i === secondYear)
+                    ? startingDate.getTime()
+                    : new Date(`${i - 1}-01-01`).getTime();
+
+                const diff = new Date(`${i}-01-01`).getTime() - before;
+                const daysDiff = diff / (1000 * 3600 * 24);
+
+                dateElem.style.marginTop = `${daysDiff}px`;
+
+                scaleTarget.appendChild(dateElem);
+            }
+
+            const todayDateElem = document.createElement('div');
+            todayDateElem.className = 'scale__item';
+            todayDateElem.innerHTML = `<span class="scale__inner">today</span>`;
+            todayDateElem.style.marginTop = 'auto';
+            scaleTarget.appendChild(todayDateElem);
 
             for (const bar of bars) {
                 const elem = document.createElement('div');
@@ -207,11 +259,11 @@
                 elem.style.height = `${getDaysBetweenDates(bar.start, end)}px`;
                 elem.style.marginTop = `${getDaysBetweenDates(startingDate, bar.start)}px`;
 
-                target.appendChild(elem);
+                barsTarget.appendChild(elem);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', renderBars);
+        document.addEventListener('DOMContentLoaded', render);
     </script>
 </body>
 </html>
