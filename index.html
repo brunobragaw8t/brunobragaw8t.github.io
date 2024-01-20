@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bruno Braga's experience</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-color: rgb(17, 24, 39);
+            color: rgb(249, 250, 251);
+            font-family: 'Arial', sans-serif;
+        }
+
+        #main {
+            padding: 1rem;
+        }
+
+        .bars {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .bars__item {
+            position: relative;
+            padding: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .bars__inner {
+            position: sticky;
+            top: 0.5rem;
+        }
+        
+        .bars__icon {
+            display: block;
+            width: 1.125rem;
+            margin: 0 auto 0.5rem;
+        }
+        
+        .bars__text {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div class="scale js-scale">
+        </div><!-- .scale -->
+
+        <div class="bars js-bars">
+        </div><!-- .bars -->
+    </div><!-- #main -->
+
+    <script>
+        function getDaysBetweenDates(date1, date2) {
+            const startDate = new Date(date1);
+            const endDate = new Date(date2);
+            const diff = endDate - startDate;
+
+            return Math.floor(diff / (1000 * 60 * 60 * 24));
+        }
+
+        function render() {
+            const target = document.querySelector('.js-bars');
+
+        }
+
+        function renderScale() {
+
+        }
+
+        function renderBars() {
+            const target = document.querySelector('.js-bars');
+
+            if (!target) {
+                return;
+            }
+
+            const bars = [
+                {
+                    title: 'Education',
+                    start: '2011-09-15',
+                    end: '2014-07-31',
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=html',
+                    title: 'HTML',
+                    start: '2011-09-15',
+                    end: '2014-07-31',
+                },
+                {
+                    title: 'Pascal',
+                    start: '2011-09-15',
+                    end: '2012-07-31',
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=php',
+                    title: 'PHP',
+                    start: '2012-09-15',
+                    end: '2014-07-31',
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=css',
+                    title: 'CSS',
+                    start: '2014-03-01',
+                    end: '2014-07-31',
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=html',
+                    title: 'HTML',
+                    start: '2015-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=css',
+                    title: 'CSS',
+                    start: '2015-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=sass',
+                    title: 'Sass',
+                    start: '2016-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=jquery',
+                    title: 'jQuery',
+                    start: '2016-04-01',
+                    end: '2022-02-25',
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=php',
+                    title: 'PHP',
+                    start: '2017-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=wordpress',
+                    title: 'WordPress',
+                    start: '2018-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=js',
+                    title: 'JavaScript (ES6)',
+                    start: '2021-04-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=vue',
+                    title: 'Vue',
+                    start: '2022-01-25',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=tailwind',
+                    title: 'Tailwind',
+                    start: '2022-05-28',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=nuxt',
+                    title: 'Nuxt',
+                    start: '2022-11-01',
+                    end: null,
+                },
+                {
+                    icon: 'https://skillicons.dev/icons?i=nestjs',
+                    title: 'NestJS',
+                    start: '2023-06-01',
+                    end: null,
+                },
+            ];
+
+            const today = new Date();
+
+            const startingDate = bars.reduce((acc, i) => {
+                const date = new Date(i.start);
+
+                if (date < acc) {
+                    return date;
+                }
+
+                return acc;
+            }, today);
+
+            target.style.height = `${getDaysBetweenDates(startingDate, today)}px`;
+
+            for (const bar of bars) {
+                const elem = document.createElement('div');
+                elem.className = 'bars__item';
+                elem.innerHTML = `<div class="bars__inner">
+                    <img src="${bar.icon}" class="bars__icon" />
+                    <span class="bars__text">${bar.title}</span>
+                </div>`;
+
+                const end = (null !== bar.end) ? bar.end : today;
+
+                elem.style.height = `${getDaysBetweenDates(bar.start, end)}px`;
+                elem.style.marginTop = `${getDaysBetweenDates(startingDate, bar.start)}px`;
+
+                target.appendChild(elem);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderBars);
+    </script>
+</body>
+</html>
