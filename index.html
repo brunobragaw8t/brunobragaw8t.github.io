@@ -15,6 +15,23 @@
             font-family: 'Arial', sans-serif;
         }
 
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 2rem;
+        }
+
+        .pic {
+            width: 12rem;
+            border-radius: 100%;
+        }
+
+        .profile {
+            width: 22rem;
+            line-height: 1.5;
+        }
+
         #main {
             display: flex;
             padding: 1rem;
@@ -97,6 +114,15 @@
     </style>
 </head>
 <body>
+    <header>
+        <img src="./img/pic.jpg" alt="Bruno Braga" class="pic" />
+
+        <p class="profile">
+            Hi! My name's Braga and I'm a developer with strong knowledge of the fundamentals.<br />
+            This is my experience:
+        </p>
+    </header>
+
     <div id="main" class="js-main">
         <div class="scale js-scale">
         </div><!-- .scale -->
