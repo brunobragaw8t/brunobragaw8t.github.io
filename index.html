@@ -23,7 +23,7 @@
         }
 
         .pic {
-            width: 12rem;
+            width: 10rem;
             border-radius: 100%;
         }
 
@@ -91,17 +91,46 @@
         .bars__inner {
             position: sticky;
             top: 0.5rem;
+            z-index: 1;
         }
         
         .bars__icon {
             display: block;
             width: 1.125rem;
-            margin: 0 auto 0.5rem;
+        }
+
+        .bars__tooltip,
+        .bars__tooltip::before {
+            background: #0c121e;
         }
         
-        .bars__text {
-            writing-mode: vertical-rl;
-            text-orientation: upright;
+        .bars__tooltip {
+            display: block;
+            position: absolute;
+            top: 1rem;
+            right: 50%;
+            transform: translateX(50%);
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.2s, top 0.2s;
+            white-space: nowrap;
+        }
+
+        .bars__tooltip::before {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 50%;
+            bottom: 85%;
+            transform: translateX(50%) rotate(-45deg);
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        .bars__item:hover .bars__tooltip {
+            top: 2rem;
+            opacity: 1;
         }
 
         footer {
@@ -329,7 +358,7 @@
                 elem.className = 'bars__item';
                 elem.innerHTML = `<div class="bars__inner">
                     <img src="${bar.icon}" class="bars__icon" />
-                    <span class="bars__text">${bar.title}</span>
+                    <span class="bars__tooltip">${bar.title}</span>
                 </div>`;
 
                 const end = (null !== bar.end) ? bar.end : today;
